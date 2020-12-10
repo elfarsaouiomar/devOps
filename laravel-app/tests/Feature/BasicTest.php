@@ -27,16 +27,15 @@ class BasicTest extends TestCase
 
     public function testCreateProducts()
     {
-        $response = $this->post('/s',
+        $response = $this->post('/products',
             [
-                'key' => 'value',
-                'key' => 'value',        
-                'key' => 'value',
-                'key' => 'value',
+                'name' => 'this a test from php',
+                'detail' => 'this a test from php ',        
+
             ]);
 
         $this->followingRedirects();
         $response->assertStatus(302);
-        $response->assertSeeText();
+        // $response->assertSeeText();
     }
 }
