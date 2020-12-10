@@ -6,6 +6,7 @@ pipeline {
                 sh 'docker-compose -f docker-compose.test.yml up -d'
                 sh 'cp laravel-app/.env.example laravel-app/.env'
                 sh 'docker-compose run --rm composer install'
+                sh 'sudo chown -R www-data:www-data .'
                 sh 'sudo docker exec -i php php /var/www/html/laravelapp/artisan artisan key:generate'
                 sh 'sudo docker exec -i php php /var/www/html/laravelapp/artisan migrate'
             }
