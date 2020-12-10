@@ -1,4 +1,4 @@
-FROM php:7.4.13-zts-alpine3.12
+FROM php:7.2.2-fpm
 
 LABEL maintainer "@omarelfarsaoui"
 
