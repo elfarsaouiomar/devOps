@@ -14,13 +14,8 @@ pipeline {
         stage("Build") {
             steps {
                 
-                result = sh 'docker ps -a -q'
-                echo result
-
-                if (result) {
-                            echo "result machi khawya"
-                }
-                exit
+                sh 'result=$(docker ps -a -q)'
+                echo '$result'
                 sh 'docker-compose down' // Stop the container(s)
                 sh 'docker stop $(docker ps -a -q)' // stop all runing docker
                 sh 'docker rm $(docker ps -a -q)' // delete all runing docker
