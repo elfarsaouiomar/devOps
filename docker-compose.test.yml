@@ -16,6 +16,17 @@ services:
       - "9000:9000"
     networks:
       - laravel
+      
+  composer:
+    image: composer:latest
+    container_name: composer
+    volumes:
+      - ./laravel-app:/var/www/html/laravelapp
+    working_dir: /var/www/html/laravelapp
+    depends_on:
+      - php
+    networks:
+      - laravel
   
   nginx:
     image: nginx:stable-alpine
