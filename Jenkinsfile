@@ -13,18 +13,12 @@ pipeline {
                 // sh 'echo APP_DEBUG=false >> laravel-app/.env' uncomment this for prod
                 sh 'docker-compose run --rm composer install'
                 sh 'pwd'
-                sh 'sudo chown -R www-data:www-data laravel-app/'
+                sh 'sudo chown -R www-data:ubuntu laravel-app/'
                 sh 'sudo docker exec -i php php /var/www/html/laravelapp/artisan key:generate'
                 sh 'sudo docker exec -i php php /var/www/html/laravelapp/artisan migrate'
             }
         }
         stage("Unit test") {
-            steps {
-                sh 'docker exec -i php php /var/www/html/laravelapp/artisan test'
-            }
-        }
-
-        stage("turn off container") {
             steps {
                 sh 'docker exec -i php php /var/www/html/laravelapp/artisan test'
             }
