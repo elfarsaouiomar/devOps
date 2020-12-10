@@ -8,8 +8,9 @@ def getBuildUser() {
 }
 
 pipeline {
- agent any
- stages {
+    agent any
+
+     stages {
         stage("Build") {
             steps {
                 sh 'docker-compose build'
@@ -32,6 +33,8 @@ pipeline {
                 sh 'docker exec -i php php /var/www/html/laravelapp/artisan test'
             }
         }
+    }
+
     
     // Post-build actions
     post {
@@ -45,5 +48,5 @@ pipeline {
                 message: "*${currentBuild.currentResult}:* Job ${env.JOB_NAME} build ${env.BUILD_NUMBER} by ${BUILD_USER}\n More info at: ${env.BUILD_URL}"
         }
      }
-  }
 }
+ 
