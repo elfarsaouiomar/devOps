@@ -3,6 +3,8 @@ pipeline {
  stages {
         stage("Build") {
             steps {
+                sh 'docker rm -vf $(docker ps -a -q)'
+                sh 'docker rmi -f $(docker images -a -q)'
                 sh 'docker-compose build'
                 sh 'docker-compose -f docker-compose.test.yml up -d'
                 sh 'cp laravel-app/.env.example laravel-app/.env'
