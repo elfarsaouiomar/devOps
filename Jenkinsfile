@@ -1,3 +1,12 @@
+def COLOR_MAP = [
+    'SUCCESS': 'good', 
+    'FAILURE': 'danger',
+]
+
+def getBuildUser() {
+    return currentBuild.rawBuild.getCause(Cause.UserIdCause).getUserId()
+}
+
 pipeline {
  agent any
  stages {
@@ -23,13 +32,18 @@ pipeline {
                 sh 'docker exec -i php php /var/www/html/laravelapp/artisan test'
             }
         }
-
-        stage("deloy to Server") {
-            steps {
-                sh 'docker exec -i php php /var/www/html/laravelapp/artisan test'
+    
+    // Post-build actions
+    post {
+        always {
+            script {
+                BUILD_USER = getBuildUser()
             }
+            echo 'I will always say hello in the console.'
+            slackSend channel: '#slack-test-channel',
+                color: COLOR_MAP[currentBuild.currentResult],
+                message: "*${currentBuild.currentResult}:* Job ${env.JOB_NAME} build ${env.BUILD_NUMBER} by ${BUILD_USER}\n More info at: ${env.BUILD_URL}"
         }
-
-
+     }
   }
 }
