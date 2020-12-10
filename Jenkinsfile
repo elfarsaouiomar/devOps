@@ -4,6 +4,8 @@ pipeline {
         stage("Build") {
             steps {
                 sh 'docker-compose -f docker-compose.test.yml up -d'
+                sh 'ls -la'
+                sh 'pwd'
                 sh 'sudo docker exec -i php cp /var/www/html/laravelapp/.env.example /var/www/html/laravelapp/.env'
                 sh 'sudo docker exec -i php php /var/www/html/laravelapp/artisan artisan key:generate'
                 sh 'sudo docker exec -i php php /var/www/html/laravelapp/artisan migrate'
