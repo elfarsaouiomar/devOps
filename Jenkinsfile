@@ -14,11 +14,9 @@ pipeline {
         stage("Build") {
             steps {
                 
-                sh 'result=$(docker ps -a -q)'
-                echo '$result'
                 sh 'docker-compose down' // Stop the container(s)
-                sh 'docker stop $(docker ps -a -q)' // stop all runing docker
-                sh 'docker rm $(docker ps -a -q)' // delete all runing docker
+                sh 'docker stop $(docker ps -a -q) > /dev/null 2&>1' // stop all runing docker
+                sh 'docker rm $(docker ps -a -q)  > /dev/null 2&>1' // delete all runing docker
                 sh 'docker-compose build' /// build new image
                 sh 'docker-compose -f docker-compose.test.yml up -d' // run docker as daemon
                 sh 'cp laravel-app/.env.example laravel-app/.env' // create new .env file
