@@ -34,6 +34,7 @@ pipeline {
         }
         stage("Unit test") {
             steps {
+                sh 'docker exec -i php mkdir /var/www/html/laravelapp/tests/Unit > /dev/null 2&>1' // create Unit Folder ==> fix Test directory "/var/www/html/laravelapp/./tests/Unit" not found
                 sh 'docker exec -i php php /var/www/html/laravelapp/artisan test' // run unit test 
             }
         }
