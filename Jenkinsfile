@@ -27,7 +27,7 @@ pipeline {
                 sh 'echo DB_PORT=${DB_PORT} >> laravel-app/.env' // cp DB_PASSWORD var to env file
                 // sh 'echo APP_DEBUG=false >> laravel-app/.env' uncomment this for prod
                 sh 'docker-compose run --rm composer install' // run compser to install dependencies
-                sh 'sudo chown -R www-data:ubuntu laravel-app/' // change permission 
+                sh 'sudo chown -R www-data:$(whoami) laravel-app/' // change permission 
                 sh 'sudo docker exec -i php php /var/www/html/laravelapp/artisan key:generate' // generate key laravel
                 sh 'sudo docker exec -i php php /var/www/html/laravelapp/artisan migrate' // run migration
             }
