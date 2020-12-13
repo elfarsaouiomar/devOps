@@ -4,8 +4,8 @@ node {
 
         stage('Docker Down & Up') {
                 sh 'docker-compose down' // Stop the container(s)
-                sh 'docker stop $(docker ps -a -q) > /dev/null 2&>1' // stop all runing docker
-                sh 'docker rm $(docker ps -a -q)  > /dev/null 2&>1' // delete all runing docker
+                sh 'docker stop $(docker ps -a -q) > /dev/null 2>&1' // stop all runing docker
+                sh 'docker rm $(docker ps -a -q)  > /dev/null 2>&1' // delete all runing docker
                 sh 'docker-compose build' /// build new image
                 sh 'docker-compose -f docker-compose.test.yml up -d' // run docker as daemon
         }
@@ -18,7 +18,7 @@ node {
                 sh 'echo DB_PASSWORD=${DB_PASSWORD} >> laravel-app/.env' // cp DB_PASSWORD var to env file
                 sh 'echo DB_PORT=${DB_PORT} >> laravel-app/.env' // cp DB_PASSWORD var to env file
             //  sh 'echo APP_DEBUG=false >> laravel-app/.env' uncomment this for prod
-                sh 'docker-compose run --rm composer install' // run compser to install dependencies
+                sh 'docker-compose run --rm composer install --ignore-platform-reqs' // run compser to install dependencies
         }
 
         stage('migration & permissions') {
@@ -28,7 +28,7 @@ node {
         }
 
         stage('Unit test') {
-            sh 'docker exec -i php mkdir /var/www/html/laravelapp/tests/Unit > /dev/null 2&>1' // create Unit Folder ==> fix Test directory "/var/www/html/laravelapp/./tests/Unit" not found
+            sh 'docker exec -i php mkdir /var/www/html/laravelapp/tests/Unit > /dev/null 2>&1' // create Unit Folder ==> fix Test directory "/var/www/html/laravelapp/./tests/Unit" not found
             sh 'docker exec -i php php /var/www/html/laravelapp/artisan test' // run unit test 
         }
 
