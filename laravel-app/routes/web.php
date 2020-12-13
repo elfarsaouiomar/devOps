@@ -22,3 +22,13 @@ Route::get('/', function () {
 
 // thanks to https://www.itsolutionstuff.com/post/laravel-8-crud-application-tutorial-for-beginnersexample.html
 Route::resource('products', ProductController::class);
+
+Route::get('emailme', function(){
+
+    $details['email'] = 'farsaoui288@gmail.com';
+
+    dispatch(new App\Jobs\SendEmailJob($details));
+
+    return'done';
+
+});
