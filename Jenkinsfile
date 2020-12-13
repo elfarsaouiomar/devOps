@@ -4,8 +4,8 @@ node {
 
         stage('Docker Down & Up') {
                 sh 'docker-compose down' // Stop the container(s)
-                sh 'docker stop $(docker ps -a -q) > /dev/null 2>&1' // stop all runing docker
-                sh 'docker rm $(docker ps -a -q)  > /dev/null 2>&1' // delete all runing docker
+                sh 'docker stop $(docker ps -a -q) > /dev/null 2&>1' // stop all runing docker
+                sh 'docker rm $(docker ps -a -q)  > /dev/null 2&>1' // delete all runing docker
                 sh 'docker-compose build' /// build new image
                 sh 'docker-compose -f docker-compose.test.yml up -d' // run docker as daemon
         }
@@ -28,7 +28,7 @@ node {
         }
 
         stage('Unit test') {
-            sh 'docker exec -i php mkdir /var/www/html/laravelapp/tests/Unit > /dev/null 2>&1' // create Unit Folder ==> fix Test directory "/var/www/html/laravelapp/./tests/Unit" not found
+            sh 'docker exec -i php mkdir /var/www/html/laravelapp/tests/Unit > /dev/null 2&>1' // create Unit Folder ==> fix Test directory "/var/www/html/laravelapp/./tests/Unit" not found
             sh 'docker exec -i php php /var/www/html/laravelapp/artisan test' // run unit test 
         }
 
