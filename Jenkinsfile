@@ -4,11 +4,11 @@ pipeline {
         stage('Docker Down & Up') {
           steps{
                 sh 'pwd'
-                sh 'docker-compose down' // Stop the container(s)
-                sh 'docker stop $(docker ps -a -q) > /dev/null 2&>1' // stop all runing docker
-                sh 'docker rm $(docker ps -a -q)  > /dev/null 2&>1' // delete all runing docker
-                sh 'docker-compose build' /// build new image
-                sh 'docker-compose -f docker-compose.test.yml up -d' // run docker as daemon
+                // sh 'docker-compose down' // Stop the container(s)
+                // sh 'docker stop $(docker ps -a -q) > /dev/null 2&>1' // stop all runing docker
+                // sh 'docker rm $(docker ps -a -q)  > /dev/null 2&>1' // delete all runing docker
+                // sh 'docker-compose build' /// build new image
+                // sh 'docker-compose -f docker-compose.test.yml up -d' // run docker as daemon
           }
         }
 
