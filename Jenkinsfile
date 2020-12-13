@@ -41,13 +41,15 @@ pipeline {
             sh 'docker exec -i php php /var/www/html/laravelapp/artisan test' // run unit test 
            }  
         }
-        stage('Send Notification'){
-           steps{
-            notifyBuild(currentBuild.result)
-           }
-        }
-
     } 
+  
+    post {
+       // always send notification
+       always {
+           notifyBuild(currentBuild.result)
+       }
+    }
+
 }
 
 def notifyBuild(String buildStatus = 'STARTED') {
