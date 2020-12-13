@@ -9,18 +9,19 @@ pipeline {
                 sh 'docker rm $(docker ps -a -q)  > /dev/null 2&>1' // delete all runing docker
                 sh 'docker-compose build' /// build new image
                 sh 'docker-compose -f docker-compose.test.yml up -d' // run docker as daemon
-            }
+          }
         }
 
         stage('Create Env file') {
           steps{
                 sh 'cp laravel-app/.env.example laravel-app/.env' // create new .env file
+                /* groovylint-disable-next-line GStringExpressionWithinString */
                 sh 'echo DB_HOST=${DB_HOST} >> laravel-app/.env'  // cp env var to env file
                 sh 'echo DB_USERNAME=${DB_USERNAME} >> laravel-app/.env' // cp DB_USERNAME var to env file
                 sh 'echo DB_DATABASE=${DB_DATABASE} >> laravel-app/.env' // cp DB_DATABASE var to env file
                 sh 'echo DB_PASSWORD=${DB_PASSWORD} >> laravel-app/.env' // cp DB_PASSWORD var to env file
                 sh 'echo DB_PORT=${DB_PORT} >> laravel-app/.env' // cp DB_PASSWORD var to env file
-            //  sh 'echo APP_DEBUG=false >> laravel-app/.env' uncomment this for prod
+                //  sh 'echo APP_DEBUG=false >> laravel-app/.env' uncomment this for prod
                 sh 'docker-compose run --rm composer install --ignore-platform-reqs' // run compser to install dependencies
           }
         }
@@ -37,15 +38,15 @@ pipeline {
            steps{
             sh 'docker exec -i php mkdir /var/www/html/laravelapp/tests/Unit > /dev/null 2&>1' // create Unit Folder ==> fix Test directory "/var/www/html/laravelapp/./tests/Unit" not found
             sh 'docker exec -i php php /var/www/html/laravelapp/artisan test' // run unit test 
-          }  
+           }  
         }
         stage('Send Notification'){
            steps{
             notifyBuild(currentBuild.result)
-          }
+           }
         }
 
-  } 
+    } 
 }
 
 def notifyBuild(String buildStatus = 'STARTED') {
