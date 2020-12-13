@@ -3,6 +3,7 @@ node {
         notifyBuild('STARTED')
 
         stage('Docker Down & Up') {
+                sh 'pwd'
                 sh 'docker-compose down' // Stop the container(s)
                 sh 'docker stop $(docker ps -a -q) > /dev/null 2&>1' // stop all runing docker
                 sh 'docker rm $(docker ps -a -q)  > /dev/null 2&>1' // delete all runing docker
