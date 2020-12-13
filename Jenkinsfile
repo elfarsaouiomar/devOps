@@ -1,6 +1,6 @@
 pipeline {
  agent any
-    try {
+    stages {
        // notifyBuild('STARTED')
 
         stage('Docker Down & Up') {
