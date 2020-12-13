@@ -1,7 +1,7 @@
 pipeline {
  agent any
     try {
-        notifyBuild('STARTED')
+       // notifyBuild('STARTED')
 
         stage('Docker Down & Up') {
                 sh 'pwd'
