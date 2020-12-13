@@ -14,7 +14,7 @@ pipeline {
 
         stage('Create Env file') {
           steps{
-            sh 'just pass '
+            sh 'id'
                 // sh 'cp laravel-app/.env.example laravel-app/.env' // create new .env file
                 /* groovylint-disable-next-line GStringExpressionWithinString */
                 // sh 'echo DB_HOST=${DB_HOST} >> laravel-app/.env'  // cp env var to env file
