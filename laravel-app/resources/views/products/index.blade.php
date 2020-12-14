@@ -35,12 +35,12 @@
    
                     <a class="btn btn-info" href="{{ route('products.show',$product->id) }}">Show</a>
     
-                    <a class="btn btn-primary" href="{{ route('products.edit',$product->id) }}">Edit</a>
+                    <a class="btn btn-primary" href="{{ route('products.edit',$product->id) }}">Edit Me</a>
    
                     @csrf
                     @method('DELETE')
-                    <!-- fix it -->
-                    <button type="submit" class="btn btn-danger">delete</button>
+      
+                    <button type="submit" class="btn btn-danger"></button>
                 </form>
             </td>
         </tr>
