@@ -7,7 +7,7 @@
                 <h2>CRUD Example</h2>
             </div>
             <div class="pull-right">
-                <a class="btn btn-success" href="{{ route('products.create') }}"> Create New Product</a>
+                <a class="btn btn-success" href="{{ route('products.create') }}"> Create Product</a>
             </div>
         </div>
     </div>
