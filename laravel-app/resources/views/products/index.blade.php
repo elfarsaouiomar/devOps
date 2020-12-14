@@ -39,7 +39,7 @@
    
                     @csrf
                     @method('DELETE')
-      
+                    <!-- fix it -->
                     <button type="submit" class="btn btn-danger">delete</button>
                 </form>
             </td>
