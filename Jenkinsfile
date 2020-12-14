@@ -41,6 +41,14 @@ pipeline {
             sh 'docker exec -i php php /var/www/html/laravelapp/artisan test' // run unit test 
            }  
         }
+
+        stage('deply to test Server'){
+          steps{
+            sh 'ssh -i ~/servertest.pem ${awsUsername}@${awsIP} sudo chown -R ${awsUsername}:${awsUsername} /home/${awsUsername}/devOps/laravel-app'
+            sh "rsync -e 'ssh -i ~/servertest.pem' -a -r --exclude='.env' --exclude={'vendor/','.git','storage/','node_modules/'} ~/.jenkins/workspace/devOps/ ${awsUsername}@${awsIP}:/home/${awsUsername}/devOps"
+            sh 'ssh -i ~/servertest.pem ${awsUsername}@${awsIP} sudo chown -R www-data:${awsUsername} /home/${awsUsername}/devOps/laravel-app'
+          }
+        }
     } 
   
     post {
